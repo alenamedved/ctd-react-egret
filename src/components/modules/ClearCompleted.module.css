@@ -1,0 +1,13 @@
+.clearCompletedButton {
+  width: 90%;
+  height: 2rem;
+  background-color: #9f8a8a;
+  cursor: pointer;
+}
+.clearCompInvisible {
+  display: none;
+}
+.clearCompletedButton:hover {
+  background-color: rgb(83, 81, 81);
+  color: #cd3b3b;
+}

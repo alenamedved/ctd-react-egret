@@ -1,0 +1,7 @@
+[dev]
+  command="npm run start"
+  publish="_site"
+  functions="functions"
+  
+[functions]
+ directory = "functions/"

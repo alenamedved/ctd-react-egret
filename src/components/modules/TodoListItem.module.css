@@ -6,10 +6,58 @@
   max-width: 90%;
   flex-wrap: wrap;
 }
-
 .listItem > p {
   flex-grow: 1;
 }
-.listItem > button {
-  color: red;
+.container {
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 10px;
+}
+.container > p {
+  margin: 0px;
+}
+.createdTimeP {
+  font-size: small;
+  color: #7b7e8b;
+  text-align: right;
+}
+.btn {
+  width: 35px;
+  height: 30px;
+  padding: 0px;
+  border: solid 1.5px;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: #a0a0a0;
+  border-color: #000;
+}
+.btn:hover {
+  background-color: rgb(83, 81, 81);
+  color: rgb(192, 199, 206);
+}
+.removeBtn {
+  margin-right: 5px;
+  color: #cd3b3b;
+}
+/* ------------Dark mode css-------------- */
+
+.listItemDark > span:nth-child(1) {
+  color: #efefef;
+}
+.btnDark {
+  background-color: #686363;;
+}
+/*-----------------Media------------------- */
+@media screen and (max-width: 500px) {
+  .btn {
+    width: 26px;
+    height: 25px;
+  }
+  .editBtn {
+    font-size: 0.6rem;
+  }
+  .createdTimeP {
+    font-size: 0.6rem;
+  }
 }

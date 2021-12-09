@@ -1,27 +1,68 @@
-
-
 body {
   margin: 10%;
   height: 100vh;
-  border: solid black 2px;
-  background-image: linear-gradient(#e0d6ca, #a3838f);
+  
+  background-image: linear-gradient(#808080, #a9a9a9, #444337);
   font-family: "Bebas Neue", cursive;
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body.isDark {
+  background-color: #060606;
+  background-image: none;
+}
 #root {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 0.1fr 2fr 5fr;
+  grid-template-rows: 25px auto;
   justify-items: left;
-  background-image: radial-gradient(#c2bfbd, #aaa0a4);
+  background-image: radial-gradient(ellipse at top, #d3d3d3, #808080);
+  border: solid black 2px;
   height: 100vh;
+  overflow: auto;
+  padding-bottom: 30px;
+  box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 38%);
 }
-.react-toggle--checked .react-toggle-track {
-  background-color: #ab1919;
+body.isDark #root {
+  background-color: #1b1a1a;
+  background-image: none;
 }
 
-.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
-  background-color: #8d1212;
+h1 {
+  color: "darkred";
+}
+.custom-classname.react-toggle {
+  align-self: flex-start;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.custom-classname.react-toggle--checked .react-toggle-track {
+  background-color: #4e414d;
+  transition: all 1s ease;
+}
+.custom-classname.react-toggle--checked
+  .react-toggle-track
+  .react-toggle-track-check {
+  top: 8px;
+  left: 5px;
+  color: #f1f141;
+  transform: rotate(355deg);
+  transition: all 1s ease;
+}
+@media screen and (max-width: 800px) {
+  body {
+    margin: 0;
+  }
+  #root {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 450px) {
+  body {
+    font-size: 0.8rem;
+  }
 }

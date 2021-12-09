@@ -1,6 +1,10 @@
 .navContainer {
   width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 3;
+ 
 }
+
 .navListContainer {
   height: 80%;
   display: flex;
@@ -10,17 +14,22 @@
   align-content: center;
   padding: 0;
   margin: auto;
-  width: 50%;
+  width: 80%;
 }
 .navListContainer > li {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   list-style-type: none;
   margin: 0;
   padding: 10px;
-  border: solid black;
-  /* opacity: 0.8; */
+  border: solid black 1.5px;
+  background-image: linear-gradient(#dcdcd6, #969696);
+  opacity: 0.8;
+  box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 38%);
+}
+.activeList {
+  opacity: 1;
 }
 .navListContainer > li > a {
   display: flex;
@@ -34,5 +43,33 @@
   border-radius: 50px;
   opacity: 0.3;
 }
+/* ------------Dark mode css-------------- */
 
+.navContainerDark >ul > li {
+  background-image: none;
+  background-color: #2a2929;
+}
+/*-----------------Media------------------- */
+@media screen and (max-width: 800px) {
+  .navContainer {
+    display: flex;
 
+  }
+  .navListContainer {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    flex-wrap: wrap;
+    align-content: space-between;
+    margin-top: 0.4rem;
+    margin-bottom: 0px;
+  }
+  .navListContainer > li {
+    border: none;
+    height: fit-content;
+  }
+  
+  .navListContainer > li > a > img {
+    display: none;
+  }
+}

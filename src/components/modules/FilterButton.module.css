@@ -1,9 +1,21 @@
 .btn {
   width: 30%;
-  height: 2rem;
+  height: 3rem;
+  background-color: #979292;
+  padding: 0px;
+  display: inline-block;
+  cursor: pointer;
+  
+}
+.btn:hover {
+  background-color: rgb(83, 81, 81);
+  color: rgb(192, 199, 206);
 }
 .btn[aria-pressed="true"] {
   text-decoration: underline;
-  border-color: #4d4d4d;
- 
+  border: 2px solid;
+}
+/* ------------Dark mode css-------------- */
+.btnDark {
+  background-color: #686363;
 }

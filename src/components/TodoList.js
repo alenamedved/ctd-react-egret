@@ -10,7 +10,6 @@ const TodoList = React.memo(
     onEditTodo,
     changeTodoStatus,
     todoStatusDone,
-    
   }) => {
     return (
       <ul className={style.ulContainer}>
@@ -34,7 +33,7 @@ TodoList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       fields: PropTypes.shape({
-        isCompleted: PropTypes.string,
+        isCompleted: PropTypes.bool,
         Title: PropTypes.string,
       }),
     })
@@ -43,7 +42,7 @@ TodoList.propTypes = {
   onEditTodo: PropTypes.func,
   changeTodoStatus: PropTypes.func,
   todoStatusToBeDone: PropTypes.string,
-  todoStatusDone: PropTypes.string,
+  todoStatusDone: PropTypes.bool,
 };
 
 export default TodoList;

@@ -1,0 +1,14 @@
+.checkboxContainer {
+    display: flex;
+    align-content: revert;
+    justify-content: flex-end;
+    max-width: 90%;
+    font-size: smaller;
+}
+.checkboxContainer > input {
+    align-self: center;
+   
+}
+.checkboxContainer > input:focus {
+    color: rgb(197, 48, 48);
+}

@@ -1,6 +1,22 @@
-import React from "react";
+import React, {useContext} from "react";
+import { Context } from "./context";
 import style from "./modules/TodoListItem.module.css";
 import PropTypes from "prop-types";
+
+//Function to get a current time
+function getTime(date) {
+  const dateCreated = new Date(date);
+  const options = {
+    weekday: "short",
+    /* year: "numeric", */
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  //to get rid of ',' use split and join methods
+  return dateCreated.toLocaleString(undefined, options).split(",").join(" ");
+}
 
 const TodoListItem = React.memo(
   ({ todo, onRemoveTodo, onEditTodo, changeTodoStatus, todoStatusDone }) => {
@@ -19,34 +35,47 @@ const TodoListItem = React.memo(
       }
     };
     const checked = todo.fields.isCompleted === todoStatusDone;
-    
+    /* console.log(context) */
+    const isDark = useContext(Context);
     return (
       <>
-        <li className={style.listItem}>
+        <li className={`${style.listItem} ${isDark ? style.listItemDark : null}`}>
           <input
             type="checkbox"
             defaultChecked={checked}
             onClick={() => changeTodoStatus(todo.id)}
           />
-          <p
-            style={{
-              textDecoration:
-                todo.fields.isCompleted === todoStatusDone
-                  ? "line-through"
-                  : "",
-              color:
-                todo.fields.isCompleted === todoStatusDone ? "gray" : "initial",
-            }}
-          >
-            {todo.fields.Title}
-          </p>
-
+          <span className={style.container}>
+            <p
+              style={{
+                textDecoration:
+                  todo.fields.isCompleted === todoStatusDone
+                    ? "line-through"
+                    : "",
+                color:
+                  todo.fields.isCompleted === todoStatusDone
+                    ? "gray"
+                    : "",
+              }}
+            >
+              {todo.fields.Title}
+            </p>
+            <p className={style.createdTimeP}>
+              Added on:{getTime(todo.createdTime)}
+            </p>
+          </span>
           <button
-            onClick={() => onRemoveTodo(todo.id, todo.fields.isCompleted)}
+            className={`${style.removeBtn} ${style.btn} ${isDark ? style.btnDark : ''}`}
+            onClick={() => onRemoveTodo(todo.id, !!todo.fields.isCompleted)}
           >
             ✖
           </button>
-          <button onClick={handleClick}>Edit</button>
+          <button
+            className={`${style.editBtn} ${style.btn} ${isDark ? style.btnDark : ''}`}
+            onClick={handleClick}
+          >
+            Edit
+          </button>
         </li>
       </>
     );
@@ -57,14 +86,14 @@ TodoListItem.propTypes = {
   todo: PropTypes.shape({
     id: PropTypes.string,
     fields: PropTypes.shape({
-      isCompleted: PropTypes.string,
+      isCompleted: PropTypes.bool,
       Title: PropTypes.string,
     }),
   }),
   onRemoveTodo: PropTypes.func,
   onEditTodo: PropTypes.func,
   changeTodoStatus: PropTypes.func,
-  todoStatusDone: PropTypes.string,
+  todoStatusDone: PropTypes.bool,
 };
 
 export default TodoListItem;
