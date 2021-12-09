@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import style from './modules/AddTodoForm.module.css'
-import { useState } from "react";
+import { Context } from "./context";
 import InputWithLabel from "./InputWithLabel";
 import PropTypes from "prop-types"
 
 const AddTodoForm = React.memo(({ onAddTodo }) => {
   const [todoTitle, setTodoTitle] = useState("");
-
+  const isDark = useContext(Context);
   //update the todoTitle state with input value
   const handleTitleChange = (event) => {
     const newTodoTitle = event.target.value;
@@ -23,7 +23,7 @@ const AddTodoForm = React.memo(({ onAddTodo }) => {
   };
 
   return (
-    <form onSubmit={handleAddTodo} className={style.formElement}>
+    <form onSubmit={handleAddTodo} className={`${style.formElement} ${isDark ? style.formElementDark : null}`}>
       <InputWithLabel
         todoTitle={todoTitle}
         handleTitleChange={handleTitleChange}

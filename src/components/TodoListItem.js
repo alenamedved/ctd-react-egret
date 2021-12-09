@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import { Context } from "./context";
 import style from "./modules/TodoListItem.module.css";
 import PropTypes from "prop-types";
 
@@ -35,10 +36,10 @@ const TodoListItem = React.memo(
     };
     const checked = todo.fields.isCompleted === todoStatusDone;
     /* console.log(context) */
-
+    const isDark = useContext(Context);
     return (
       <>
-        <li className={style.listItem}>
+        <li className={`${style.listItem} ${isDark ? style.listItemDark : null}`}>
           <input
             type="checkbox"
             defaultChecked={checked}
@@ -54,7 +55,7 @@ const TodoListItem = React.memo(
                 color:
                   todo.fields.isCompleted === todoStatusDone
                     ? "gray"
-                    : "initial",
+                    : "",
               }}
             >
               {todo.fields.Title}
@@ -64,13 +65,13 @@ const TodoListItem = React.memo(
             </p>
           </span>
           <button
-            className={`${style.removeBtn} ${style.btn}`}
+            className={`${style.removeBtn} ${style.btn} ${isDark ? style.btnDark : ''}`}
             onClick={() => onRemoveTodo(todo.id, !!todo.fields.isCompleted)}
           >
             ✖
           </button>
           <button
-            className={`${style.editBtn} ${style.btn}`}
+            className={`${style.editBtn} ${style.btn} ${isDark ? style.btnDark : ''}`}
             onClick={handleClick}
           >
             Edit

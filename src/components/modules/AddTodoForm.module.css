@@ -8,7 +8,7 @@
   height: 2rem;
   font-size: large;
   background-color: #ccc9c9;
-  /* box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 38%); */
+  
 }
 .formElement > input:focus {
   border-color: #4d4d4d;
@@ -26,4 +26,8 @@
   color: black;
   background-color: lightgray;
   border: black solid 2px;
+}
+/* ------------Dark mode css-------------- */
+.formElementDark > input {
+background-color: #363434;
 }

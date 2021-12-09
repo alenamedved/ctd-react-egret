@@ -11,14 +11,13 @@
 }
 .container {
   flex-direction: column;
-    flex-grow: 1;
-    margin: 10px;
+  flex-grow: 1;
+  margin: 10px;
 }
 .container > p {
   margin: 0px;
 }
 .createdTimeP {
-  
   font-size: small;
   color: #7b7e8b;
   text-align: right;
@@ -41,7 +40,15 @@
   margin-right: 5px;
   color: #cd3b3b;
 }
+/* ------------Dark mode css-------------- */
 
+.listItemDark > span:nth-child(1) {
+  color: #efefef;
+}
+.btnDark {
+  background-color: #686363;;
+}
+/*-----------------Media------------------- */
 @media screen and (max-width: 500px) {
   .btn {
     width: 26px;

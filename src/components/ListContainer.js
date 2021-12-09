@@ -119,6 +119,7 @@ function ListContainer({ listName, handleUpdate }) {
   useEffect(() => {
     setDoneTodos(tobeRemoved);
   }, [todoList]);
+  
   //add new todo to the list at Airtable and todoList
   const addTodo = (newTodo) => {
     fetch(`${url}/${encodeURIComponent(listName)}`, {
@@ -238,7 +239,7 @@ function ListContainer({ listName, handleUpdate }) {
   
   
   return (
-    <div className={isDark ? style.listContainerDark : style.listContainer}>
+    <div className={`${style.listContainer} ${isDark ? style.listContainerDark : null}`}>
       <h1>{listName}</h1>
       <SortingCheckbox  setSortChecked={setSortChecked}  />
 

@@ -9,8 +9,11 @@ const Navigation = React.memo(({ categories, counts }) => {
   /* console.log(context) */
   const isDark = useContext(Context);
   return (
-    <nav className={isDark ? style.navContainerDark : style.navContainer}>
-      <span>{isDark ? 'dark': 'light'}</span>
+    <nav
+      className={`${style.navContainer} ${
+        isDark ? style.navContainerDark : null
+      }`}
+    >
       <ul className={style.navListContainer}>
         {categories.map((table, index) => (
           <li key={index}>

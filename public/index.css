@@ -10,7 +10,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 body.isDark {
-  background-color: rgb(19, 18, 18);
+  background-color: #060606;
   background-image: none;
 }
 #root {
@@ -26,7 +26,7 @@ body.isDark {
   box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 38%);
 }
 body.isDark #root {
-  background-color: black;
+  background-color: #1b1a1a;
   background-image: none;
 }
 

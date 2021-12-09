@@ -15,3 +15,7 @@
   text-decoration: underline;
   border: 2px solid;
 }
+/* ------------Dark mode css-------------- */
+.btnDark {
+  background-color: #686363;
+}

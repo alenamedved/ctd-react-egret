@@ -1,12 +1,14 @@
-import React, {memo} from 'react';
+import React, {memo, useContext} from 'react';
 import style from './modules/FilterButton.module.css'
 import PropTypes from "prop-types"
+import { Context } from "./context";
 
 const FilterButton = memo(({ name, isPressed, setFilter }) => {
+  const isDark = useContext(Context);
   return (
     <button
       type="button"
-      className={style.btn}
+      className={`${style.btn} ${isDark ? style.btnDark : null}`}
       aria-pressed={isPressed}
       onClick={() => setFilter(name)}
     >

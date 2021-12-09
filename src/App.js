@@ -43,7 +43,7 @@ async function fetchTodoItems(category) {
 
 async function allData() {
   try {
-    const response = await fetch("/.netlify/functions/fetchBaseSchema", {
+    const response = await fetch("/.netlify/functions/my_functions", {
       headers: {
         "X-Airtable-Client-Secret": "foo-123123",
         "Content-Type": "application/json",
@@ -103,7 +103,7 @@ function App() {
       return { ...todoCounts, [category]: todoCounts[category] + delta };
     });
   }
-
+  allData()
   return (
     <Router>
       <Context.Provider value={isDark}>
@@ -120,11 +120,13 @@ function App() {
         <Navigation categories={todoCategories} counts={todoCounts} />
 
         <Route exact path="/">
+        <div>
           <img
-            src="./logo/guys.jpg"
+            src={isDark ? "./logo/guysDark.jpg" : "./logo/guys.jpg"}
             alt="Lets do it!"
             className={style.homeImg}
           ></img>
+          </div>
         </Route>
         <Switch>
           {todoCategories.map((table, index) => (

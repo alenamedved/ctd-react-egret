@@ -1,7 +1,7 @@
 .navContainer {
   width: 100%;
   grid-column-start: 1;
-    grid-column-end: 3;
+  grid-column-end: 3;
  
 }
 
@@ -24,7 +24,7 @@
   margin: 0;
   padding: 10px;
   border: solid black 1.5px;
-  background-image: linear-gradient(#e7e7e0, #5b5851);
+  background-image: linear-gradient(#dcdcd6, #969696);
   opacity: 0.8;
   box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 38%);
 }
@@ -43,18 +43,13 @@
   border-radius: 50px;
   opacity: 0.3;
 }
+/* ------------Dark mode css-------------- */
 
-.navListContainerDark {
-  background-color: black;
-  transition: all 0.5s ease;
+.navContainerDark >ul > li {
+  background-image: none;
+  background-color: #2a2929;
 }
-.navContainerDark {
-  background-color: rgb(39, 37, 37);
-  width: 100%;
-  grid-column-start: 1;
-    grid-column-end: 3;
-}
-
+/*-----------------Media------------------- */
 @media screen and (max-width: 800px) {
   .navContainer {
     display: flex;
