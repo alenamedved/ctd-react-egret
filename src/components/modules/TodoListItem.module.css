@@ -45,6 +45,9 @@
 .listItemDark > span:nth-child(1) {
   color: #efefef;
 }
+.listItemDark > p {
+
+}
 .btnDark {
   background-color: #686363;;
 }

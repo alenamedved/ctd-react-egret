@@ -12,10 +12,10 @@
 }
 /* ------------Dark mode css-------------- */
 .listContainerDark {
-  color: #efefef;
+  color: #d2cccc;
 }
 .listContainerDark > h1 {
-  color: #efefef;
+  color: #d2cccc;
 }
 /*-----------------Media------------------- */
 @media screen and (min-width: 600px) {
