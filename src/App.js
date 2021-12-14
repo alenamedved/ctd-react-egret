@@ -54,12 +54,9 @@ async function fetchTable(todoCategory) {
       }
     );
     const data = await response.json();
-      
-    console.log("response?", data);
 
     return data;
   } catch (error) {
-    
     return console.log(error);
   }
 }
@@ -69,7 +66,8 @@ async function fetchTable(todoCategory) {
     return fetchTodoItems(todoCategory.category);
   });
 } */
-//fetch using lambda function
+
+//fetch using serverless netlify function
 function fetchTodoTables() {
   return todoCategories.map((todoCategory) => {
     return fetchTable(todoCategory.category);
@@ -78,7 +76,7 @@ function fetchTodoTables() {
 function App() {
   const [todoCounts, setTodoCounts] = React.useState({});
   const [isDark, setIsDark] = React.useState(false);
-  
+
   React.useLayoutEffect(() => {
     if (isDark) {
       document.body.classList.add("isDark");
@@ -109,13 +107,12 @@ function App() {
     setTodoCounts(() => {
       return { ...todoCounts, [category]: todoCounts[category] + delta };
     });
-  }
- 
+  };
+
   return (
     <Router>
       <Context.Provider value={isDark}>
         <Toggle
-          //className="dark-mode-toggle"//
           checked={isDark}
           className="custom-classname"
           icons={{
@@ -124,7 +121,7 @@ function App() {
           }}
           onChange={({ target }) => setIsDark(target.checked)}
         />
-        
+
         <Navigation categories={todoCategories} counts={todoCounts} />
 
         <Route exact path="/">

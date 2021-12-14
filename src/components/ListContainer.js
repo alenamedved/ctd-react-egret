@@ -9,35 +9,9 @@ import PropTypes from "prop-types";
 import ClearCompletedButton from "./buttons/ClearCompletedButton";
 import { Context } from "./context";
 
-const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}`;
-const authorization = `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`;
 const todoStatusDone = true;
 
-//body to pass to fetch request when edit a title value
-const bodyToEditTodoRecord = (id, value) =>
-  JSON.stringify({
-    records: [
-      {
-        id: id,
-        fields: {
-          Title: value,
-        },
-      },
-    ],
-  });
-//body to pass to fetch request when update a isCompleted todo status (done or not)
-const bodyToUpdateTodoStatus = (id, value) =>
-  JSON.stringify({
-    records: [
-      {
-        id: id,
-        fields: {
-          isCompleted: value,
-        },
-      },
-    ],
-  });
-//func to edit todo title value
+//func to edit todo record (Title value or isCompleted value)
 function editTodoRecord(listName, id, value, status) {
   /* fetch(`${url}/${encodeURIComponent(listName)}`, {
     method: "PATCH",
@@ -47,16 +21,12 @@ function editTodoRecord(listName, id, value, status) {
     },
     body: body(id, value),
   }) */
-  console.log(value)
-  console.log(status);
+
   fetch(
     `/.netlify/functions/editRecord?todoCategory=${encodeURIComponent(
       listName
     )}&id=${id}&value=${value}&status=${status}`
-  )
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-    
+  );
 }
 
 //object where the keys are filter values and values are functions to be passed to filter method
@@ -93,7 +63,6 @@ const useSemiPersistentState = (listName) => {
         return response.json();
       })
       .then((result) => {
-        console.log(result)
         if (sortChecked) {
           result.records.sort((a, b) =>
             a.fields.Title.toLowerCase() > b.fields.Title.toLowerCase() ? 1 : -1
@@ -169,7 +138,6 @@ function ListContainer({ listName, handleUpdate }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         if (filter === "All" || filter === "Active") {
           if (sortChecked) {
             todoList.data.push(data.records[0]);
@@ -205,7 +173,6 @@ function ListContainer({ listName, handleUpdate }) {
     fetch(`/.netlify/functions/removeItem?todoCategory=${listName}&id=${id}`)
       .then((response) => response.json())
       .then((data) => {
-       
         dispatchTodoList({
           type: actions.removeTodo,
           payload: data.records[0].id,
@@ -261,7 +228,7 @@ function ListContainer({ listName, handleUpdate }) {
       payload: todoList.data,
     });
   };
-console.log(todoList)
+
   return (
     <div
       className={`${style.listContainer} ${
