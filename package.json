@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "airtable": "^0.11.1",
-    "node-fetch": "^3.1.0",
+    "dotenv-webpack": "^7.0.3",
+    "netlify-cli": "^8.0.20",
+    "node-fetch": "2.6.6",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -12,12 +14,13 @@
     "react-scripts": "4.0.3",
     "react-toggle": "^4.1.2"
   },
-  
   "scripts": {
     "start": "react-scripts start",
+    "start:lambda": "netlify-lambda serve src/lambda",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "debug": "netlify dev --inspect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,5 +37,4 @@
       "last 1 safari version"
     ]
   }
-  
 }

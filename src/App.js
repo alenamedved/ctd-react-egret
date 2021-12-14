@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ListContainer from "./components/ListContainer";
 import Navigation from "./components/Navigation";
-import style from "./components/modules/App.module.css";
+import Home from "./components/Home";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import { Context } from "./components/context";
@@ -22,7 +22,7 @@ const todoCategories = [
   },
 ];
 
-async function fetchTodoItems(category) {
+/* async function fetchTodoItems(category) {
   try {
     const response = await fetch(
       `https://api.airtable.com/v0/${
@@ -39,39 +39,46 @@ async function fetchTodoItems(category) {
   } catch (error) {
     return console.log(error);
   }
-}
+} */
 
-async function allData() {
+async function fetchTable(todoCategory) {
   try {
-    const response = await fetch("/.netlify/functions/my_functions", {
-      headers: {
-        "X-Airtable-Client-Secret": "foo-123123",
-        "Content-Type": "application/json",
-      },
-    });
-
+    const response = await fetch(
+      `/.netlify/functions/fetchTable?todoCategory=${encodeURIComponent(
+        todoCategory
+      )}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
-
-    console.log("response?", response);
-    console.log("response data?", JSON.parse(data));
+      
+    console.log("response?", data);
 
     return data;
   } catch (error) {
-    console.log("Error happened here!");
+    
     return console.log(error);
   }
 }
 
-function fetchTodoTables() {
+/* function fetchTodoTables() {
   return todoCategories.map((todoCategory) => {
     return fetchTodoItems(todoCategory.category);
   });
+} */
+//fetch using lambda function
+function fetchTodoTables() {
+  return todoCategories.map((todoCategory) => {
+    return fetchTable(todoCategory.category);
+  });
 }
-
 function App() {
   const [todoCounts, setTodoCounts] = React.useState({});
   const [isDark, setIsDark] = React.useState(false);
-  /* console.log(isDark); */
+  
   React.useLayoutEffect(() => {
     if (isDark) {
       document.body.classList.add("isDark");
@@ -98,12 +105,12 @@ function App() {
     });
   }, []);
 
-  function updateCount(category, delta) {
+  const updateCount = (category, delta) => {
     setTodoCounts(() => {
       return { ...todoCounts, [category]: todoCounts[category] + delta };
     });
   }
-  allData()
+ 
   return (
     <Router>
       <Context.Provider value={isDark}>
@@ -117,17 +124,13 @@ function App() {
           }}
           onChange={({ target }) => setIsDark(target.checked)}
         />
+        
         <Navigation categories={todoCategories} counts={todoCounts} />
 
         <Route exact path="/">
-        <div>
-          <img
-            src={isDark ? "./logo/guysDark.jpg" : "./logo/guys.jpg"}
-            alt="Lets do it!"
-            className={style.homeImg}
-          ></img>
-          </div>
+          <Home />
         </Route>
+
         <Switch>
           {todoCategories.map((table, index) => (
             <Route path={`/${table.category}`} key={index}>

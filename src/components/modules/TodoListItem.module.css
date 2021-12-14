@@ -11,7 +11,7 @@
 }
 .container {
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1;
   margin: 10px;
 }
 .container > p {

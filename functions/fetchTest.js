@@ -11,7 +11,7 @@ const at_table_movies = at_base('movies')
 exports.handler = async (event, context, callback) => {
 	const qs_val_recid = event.queryStringParameters.recid
 	var resp, sendBack
-
+console.log(REACT_APP_AIRTABLE_API_KEY)
 	try {
 		// https://community.airtable.com/t/variable-in-filterbyformula/2251
 		// filterFormula = "({field_name} = '" + value_to_filter_by + "')"

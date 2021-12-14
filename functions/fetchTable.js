@@ -1,17 +1,26 @@
-/* import fetch from "node-fetch"; */
 const fetch = require('node-fetch')
+
+/* const  REACT_APP_AIRTABLE_API_KEY  = "keyJriDpHL4TsAakG";
+const  REACT_APP_AIRTABLE_BASE_ID  = "appqPKpL0Eq78zQKV" */
+
+const { REACT_APP_AIRTABLE_API_KEY } = process.env
+const { REACT_APP_AIRTABLE_BASE_ID } = process.env
+
+const authorization = `Bearer ${REACT_APP_AIRTABLE_API_KEY}`;
 
 exports.handler = async function(event, context) {
   let resp, sendBack;
-  const url = `https://api.airtable.com/v0/meta/bases`;
- /*  console.log(event) */
-   
-
+  const tableName = event.queryStringParameters.todoCategory
+  const url = `https://api.airtable.com/v0/${REACT_APP_AIRTABLE_BASE_ID}/${tableName}`;
+     /* console.log(REACT_APP_AIRTABLE_BASE_ID)
+     console.log(url)
+     
+     console.log(tableName) */
   try {
      resp = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: 'Bearer keyJriDpHL4TsAakG',
+        Authorization: authorization,
       },
     });
     sendBack = {

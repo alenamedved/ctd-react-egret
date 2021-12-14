@@ -4,4 +4,10 @@
   functions="functions"
   
 [functions]
- directory = "functions/"
+  directory = "functions/"
+
+[context.production]
+  publish = "output/"
+  command = "make publish"
+  environment = { ACCESS_TOKEN = "super secret", NODE_VERSION = "14.15.3" }
+

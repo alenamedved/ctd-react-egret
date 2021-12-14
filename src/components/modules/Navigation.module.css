@@ -1,8 +1,9 @@
 .navContainer {
   width: 100%;
-  grid-column-start: 1;
-  grid-column-end: 3;
- 
+  /*  grid-column-start: 1;
+  grid-column-end: 3; */
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
 }
 
 .navListContainer {
@@ -15,6 +16,7 @@
   padding: 0;
   margin: auto;
   width: 80%;
+  overflow-y: auto;
 }
 .navListContainer > li {
   display: flex;
@@ -25,11 +27,14 @@
   padding: 10px;
   border: solid black 1.5px;
   background-image: linear-gradient(#dcdcd6, #969696);
-  opacity: 0.8;
+  opacity: 0.6;
   box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 38%);
 }
-.activeList {
-  opacity: 1;
+
+.activeTasksP {
+  color: #d1cece;
+  font-size: small;
+  text-decoration: none !important;
 }
 .navListContainer > li > a {
   display: flex;
@@ -43,9 +48,10 @@
   border-radius: 50px;
   opacity: 0.3;
 }
+
 /* ------------Dark mode css-------------- */
 
-.navContainerDark >ul > li {
+.navContainerDark > ul > li {
   background-image: none;
   background-color: #2a2929;
 }
@@ -53,7 +59,6 @@
 @media screen and (max-width: 800px) {
   .navContainer {
     display: flex;
-
   }
   .navListContainer {
     display: flex;
@@ -68,8 +73,17 @@
     border: none;
     height: fit-content;
   }
-  
+
   .navListContainer > li > a > img {
     display: none;
+  }
+  .navListContainer > li > a > p {
+    margin: 0px;
+    margin-top: 10px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .navContainer {
+    flex-direction: column;
   }
 }

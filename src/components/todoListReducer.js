@@ -12,7 +12,7 @@ const actionsTodoListReducer = {
 }
 
 const todoListReducer = (state, action) => {
- 
+ console.log(action.type)
     switch (action.type) {
       /* case actionsTodoListReducer.init:
         return {
@@ -34,6 +34,7 @@ const todoListReducer = (state, action) => {
           isError: true,
         };
       case actionsTodoListReducer.removeTodo:
+        console.log(action.payload)
         return {
           ...state,
           data: state.data.filter((todo) => todo.id !== action.payload),

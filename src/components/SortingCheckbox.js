@@ -10,7 +10,7 @@ const SortingCheckbox = ({ setSortChecked }) => {
         className={style.sortingCheckBox}
         id="sort"
       ></input>
-      <label for="sort">A🔽B</label>
+      <label htmlFor="sort">A🔽B</label>
     </div>
   );
 };

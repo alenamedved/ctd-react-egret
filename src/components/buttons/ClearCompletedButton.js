@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./modules/ClearCompleted.module.css";
+import style from "../modules/ClearCompleted.module.css";
 
 const ClearCompletedButton = ({ clearCompleted, tobeRemoved }) => {
   
