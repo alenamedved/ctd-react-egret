@@ -6,7 +6,7 @@ const InputWithLabel = React.memo(({ todoTitle, handleTitleChange, children }) =
   
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, []);
 
   return (
     <>
