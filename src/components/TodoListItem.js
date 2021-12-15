@@ -37,6 +37,7 @@ const TodoListItem = React.memo(
     const checked = todo.fields.isCompleted === todoStatusDone;
     /* console.log(context) */
     const isDark = useContext(Context);
+    /* console.log(todo) */
     return (
       <>
         <li className={`${style.listItem} ${isDark ? style.listItemDark : null}`}>

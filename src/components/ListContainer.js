@@ -3,52 +3,30 @@ import style from "./modules/ListContainer.module.css";
 import AddTodoForm from "./AddTodoForm";
 import TodoList from "./TodoList";
 import todoListReducer, { actions } from "./todoListReducer";
-import FilterButton from "./FilterButton";
+import FilterButton from "./buttons/FilterButton";
 import SortingCheckbox from "./SortingCheckbox";
 import PropTypes from "prop-types";
-import ClearCompletedButton from "./ClearCompletedButton";
+import ClearCompletedButton from "./buttons/ClearCompletedButton";
 import { Context } from "./context";
 
-const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}`;
-const authorization = `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`;
 const todoStatusDone = true;
 
-//body to pass to fetch request when edit a title value
-const bodyToEditTodoRecord = (id, value) =>
-  JSON.stringify({
-    records: [
-      {
-        id: id,
-        fields: {
-          Title: value,
-        },
-      },
-    ],
-  });
-//body to pass to fetch request when update a isCompleted todo status (done or not)
-const bodyToUpdateTodoStatus = (id, value) =>
-  JSON.stringify({
-    records: [
-      {
-        id: id,
-        fields: {
-          isCompleted: value,
-        },
-      },
-    ],
-  });
-//func to edit todo title value
-function editTodoRecord(listName, id, value, body) {
-  fetch(`${url}/${encodeURIComponent(listName)}`, {
+//func to edit todo record (Title value or isCompleted value)
+function editTodoRecord(listName, id, value, status) {
+  /* fetch(`${url}/${encodeURIComponent(listName)}`, {
     method: "PATCH",
     headers: {
       Authorization: authorization,
       "Content-Type": "application/json",
     },
     body: body(id, value),
-  })
-  /* .then(response => response.json())
-  .then(data => console.log(data)); */
+  }) */
+
+  fetch(
+    `/.netlify/functions/editRecord?todoCategory=${encodeURIComponent(
+      listName
+    )}&id=${id}&value=${value}&status=${status}`
+  );
 }
 
 //object where the keys are filter values and values are functions to be passed to filter method
@@ -60,7 +38,6 @@ const FILTER_MAP = {
 //object that consist of only filter names
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-
 //custom hook
 const useSemiPersistentState = (listName) => {
   const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
@@ -69,26 +46,31 @@ const useSemiPersistentState = (listName) => {
     isError: false,
   });
   const [filter, setFilter] = React.useState("All"); //init filter with 'All' to see all tasks
-  const [sortChecked, setSortChecked] = useState(false)
-  
-  useEffect(() => {
-    /* dispatchTodoList({ type: actions.init }); */
+  const [sortChecked, setSortChecked] = useState(false);
 
-    fetch(`${url}/${encodeURIComponent(listName)}`, {
+  useEffect(() => {
+    /* fetch(`${url}/${encodeURIComponent(listName)}`, {
       headers: {
         Authorization: authorization,
       },
-    })
+    }) */
+    fetch(
+      `/.netlify/functions/fetchTable?todoCategory=${encodeURIComponent(
+        listName
+      )}`
+    )
       .then((response) => {
-        /* console.log(response) */
         return response.json();
       })
       .then((result) => {
-                        
-        if(sortChecked) {
-          result.records.sort((a, b) => (a.fields.Title.toLowerCase() > b.fields.Title.toLowerCase() ? 1 : -1));
+        if (sortChecked) {
+          result.records.sort((a, b) =>
+            a.fields.Title.toLowerCase() > b.fields.Title.toLowerCase() ? 1 : -1
+          );
         } else {
-          result.records.sort((a, b) => (a.createdTime > b.createdTime ? 1 : -1));
+          result.records.sort((a, b) =>
+            a.createdTime > b.createdTime ? 1 : -1
+          );
         }
 
         const data = result.records.filter(FILTER_MAP[filter]);
@@ -100,29 +82,42 @@ const useSemiPersistentState = (listName) => {
       .catch(() => dispatchTodoList({ type: actions.fetchFail }));
   }, [listName, filter, sortChecked]);
 
-  return [todoList, dispatchTodoList, filter, setFilter, sortChecked, setSortChecked];
+  return [
+    todoList,
+    dispatchTodoList,
+    filter,
+    setFilter,
+    sortChecked,
+    setSortChecked,
+  ];
 };
 
-
 function ListContainer({ listName, handleUpdate }) {
-  const [todoList, dispatchTodoList, filter, setFilter, sortChecked, setSortChecked] =
-    useSemiPersistentState(listName);
+  const [
+    todoList,
+    dispatchTodoList,
+    filter,
+    setFilter,
+    sortChecked,
+    setSortChecked,
+  ] = useSemiPersistentState(listName);
 
   const isDark = useContext(Context);
 
   //track the quantity of completed todos
   const [doneTodos, setDoneTodos] = useState([]);
-  //filter all done todos
-  const tobeRemoved = todoList.data.filter((todo) => todo.fields.isCompleted);
 
   //update doneTodos every time todoList updates
   useEffect(() => {
+    //filter all done todos
+    const tobeRemoved = todoList.data.filter((todo) => todo.fields.isCompleted);
+
     setDoneTodos(tobeRemoved);
   }, [todoList]);
-  
+
   //add new todo to the list at Airtable and todoList
   const addTodo = (newTodo) => {
-    fetch(`${url}/${encodeURIComponent(listName)}`, {
+    /* fetch(`${url}/${encodeURIComponent(listName)}`, {
       method: "POST",
       headers: {
         Authorization: authorization,
@@ -135,30 +130,32 @@ function ListContainer({ listName, handleUpdate }) {
               Title: newTodo,
             },
           },
-        ],
+        ], 
       }),
-    })
+    }) */
+    fetch(
+      `/.netlify/functions/addItem?todoCategory=${listName}&newTodo=${newTodo}`
+    )
       .then((response) => response.json())
       .then((data) => {
-                
         if (filter === "All" || filter === "Active") {
-         if(sortChecked) {
-          todoList.data.push(data.records[0])
-          
-           dispatchTodoList({
-             type: actions.sortList,
-             payload: todoList.data.sort((a, b) => (a.fields.Title > b.fields.Title ? 1 : -1))
-           });
-          
-        } else {
-          dispatchTodoList({
-            type: actions.addTodo,
-            payload: data.records[0],
-          });
+          if (sortChecked) {
+            todoList.data.push(data.records[0]);
 
+            dispatchTodoList({
+              type: actions.sortList,
+              payload: todoList.data.sort((a, b) =>
+                a.fields.Title > b.fields.Title ? 1 : -1
+              ),
+            });
+          } else {
+            dispatchTodoList({
+              type: actions.addTodo,
+              payload: data.records[0],
+            });
+          }
         }
-        }
-        
+
         handleUpdate(listName, +1);
       })
       .catch(() => dispatchTodoList({ type: actions.fetchFail }));
@@ -166,23 +163,21 @@ function ListContainer({ listName, handleUpdate }) {
 
   //remove todo from Airtable and todoList
   const removeTodo = (id, isCompleted) => {
-    
-    fetch(`${url}/${encodeURIComponent(listName)}/${id}`, {
+    /*  fetch(`${url}/${encodeURIComponent(listName)}/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: authorization,
         "Content-Type": "application/json",
       },
-    })
+    }) */
+    fetch(`/.netlify/functions/removeItem?todoCategory=${listName}&id=${id}`)
       .then((response) => response.json())
       .then((data) => {
-        
         dispatchTodoList({
           type: actions.removeTodo,
-          payload: data.id,
-        }); 
+          payload: data.records[0].id,
+        });
         if (!isCompleted && isCompleted !== undefined) {
-          
           handleUpdate(listName, -1);
         }
       })
@@ -191,26 +186,25 @@ function ListContainer({ listName, handleUpdate }) {
 
   //edit todo at Airtable and todoList
   const editTodo = (id, value) => {
-    editTodoRecord(listName, id, value, bodyToEditTodoRecord);
+    editTodoRecord(listName, id, value);
   };
 
   //change todo status at Airtable and todoList
   const changeTodoStatus = (id) => {
     const copyTodoList = todoList.data;
-    copyTodoList.map((todo) => {
+    copyTodoList.forEach((todo) => {
       if (todo.id === id) {
         if (!todo.fields.isCompleted) {
           todo.fields.isCompleted = todoStatusDone;
           handleUpdate(listName, -1);
         } else {
           todo.fields.isCompleted = !todoStatusDone;
-          /* todo.fields.DoneOn = null */
           handleUpdate(listName, 1);
         }
 
-        const value = todo.fields.isCompleted;
-
-        editTodoRecord(listName, todo.id, value, bodyToUpdateTodoStatus);
+        const status = todo.fields.isCompleted;
+        const value = undefined;
+        editTodoRecord(listName, todo.id, value, status);
       }
     });
     dispatchTodoList({
@@ -226,22 +220,23 @@ function ListContainer({ listName, handleUpdate }) {
     doneTodos.forEach((item) => {
       idsTobeRemoved.push(item.id);
     });
-    const deleteRecordList =
-      "?records[]=" + idsTobeRemoved.toString().replace(/,/gi, "&records[]=");
 
-    removeTodo(deleteRecordList);
+    removeTodo(idsTobeRemoved);
 
     dispatchTodoList({
       type: actions.clearCompletedTodos,
       payload: todoList.data,
     });
   };
-  
-  
+
   return (
-    <div className={`${style.listContainer} ${isDark ? style.listContainerDark : null}`}>
+    <div
+      className={`${style.listContainer} ${
+        isDark ? style.listContainerDark : null
+      }`}
+    >
       <h1>{listName}</h1>
-      <SortingCheckbox  setSortChecked={setSortChecked}  />
+      <SortingCheckbox setSortChecked={setSortChecked} />
 
       {todoList.isError && <p>Something went wrong ...</p>}
 

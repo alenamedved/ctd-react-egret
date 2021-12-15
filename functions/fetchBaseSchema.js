@@ -1,16 +1,17 @@
-import fetch from "node-fetch";
-import fs from 'node:fs/promises';
+/* import fetch from "node-fetch"; */
+const fetch = require('node-fetch')
 
-export async function handler(event, context, callback) {
+exports.handler = async function(event, context) {
   let resp, sendBack;
-  const url = `https://api.airtable.com/v0/meta/bases/${process.env.REACT_APP_AIRTABLE_BASE_ID}/tables`;
-  console.log(event)
-  
+  const url = `https://api.airtable.com/v0/meta/bases`;
+ /*  console.log(event) */
+   
+
   try {
-    resp = await fetch(url, {
+     resp = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+        Authorization: 'Bearer keyJriDpHL4TsAakG',
       },
     });
     sendBack = {
@@ -19,7 +20,7 @@ export async function handler(event, context, callback) {
         },
       statusCode: 200,
       body: JSON.stringify( await resp.json()),
-    };
+    }; 
     return sendBack;
   } catch (errObj) {
     const errBody = {

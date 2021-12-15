@@ -34,9 +34,11 @@ h1 {
   color: "darkred";
 }
 .custom-classname.react-toggle {
-  align-self: flex-start;
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  /* grid-column-start: 1;
+  grid-column-end: 4; */
 }
 
 .custom-classname.react-toggle--checked .react-toggle-track {
@@ -52,6 +54,7 @@ h1 {
   transform: rotate(355deg);
   transition: all 1s ease;
 }
+/*-----------------Media------------------- */
 @media screen and (max-width: 800px) {
   body {
     margin: 0;
@@ -60,9 +63,17 @@ h1 {
     display: flex;
     flex-direction: column;
   }
+  .custom-classname.react-toggle {
+  align-self: end;
+  }
 }
 @media screen and (max-width: 450px) {
   body {
     font-size: 0.8rem;
+  }
+}
+@media print {
+  body {
+    margin: 2%;
   }
 }
