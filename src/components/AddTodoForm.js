@@ -36,7 +36,7 @@ const AddTodoForm = React.memo(({ onAddTodo }) => {
 })
 
 AddTodoForm.propTypes = {
-  onAddTodo: PropTypes.func,
+  onAddTodo: PropTypes.func.isRequired,
 };
 
 export default AddTodoForm;
