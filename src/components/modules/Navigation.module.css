@@ -87,3 +87,8 @@
     flex-direction: column;
   }
 }
+@media print {
+  .navContainer{
+    display: none;
+  }
+}

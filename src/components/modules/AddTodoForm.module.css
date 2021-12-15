@@ -31,3 +31,8 @@
 .formElementDark > input {
 background-color: #363434;
 }
+@media print {
+  .formElement{
+  display: none;
+  }
+}

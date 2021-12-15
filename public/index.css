@@ -72,3 +72,8 @@ h1 {
     font-size: 0.8rem;
   }
 }
+@media print {
+  body {
+    margin: 2%;
+  }
+}

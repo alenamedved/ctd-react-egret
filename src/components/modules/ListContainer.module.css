@@ -26,3 +26,10 @@
     color: "darkred";
   }
 }
+@media print {
+  .listContainer{
+  grid-column: 1 / span 3;
+  grid-row: 2 / span 1;
+  height: 50%;
+  }
+}
