@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useReducer, useState } from "react";
 import style from "./modules/ListContainer.module.css";
 import AddTodoForm from "./AddTodoForm";
 import TodoList from "./TodoList";
-import todoListReducer, { actions } from "./todoListReducer";
+import todoListReducer, { actions } from "./reducer/todoListReducer";
 import FilterButton from "./buttons/FilterButton";
 import SortingCheckbox from "./SortingCheckbox";
 import PropTypes from "prop-types";
 import ClearCompletedButton from "./buttons/ClearCompletedButton";
-import { Context } from "./context";
+import { Context } from "./context/context";
 
 const todoStatusDone = true;
 

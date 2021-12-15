@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import { Context } from "./context";
+import { Context } from "./context/context";
 import style from "./modules/App.module.css";
 
 const Home = () => {

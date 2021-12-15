@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import style from "./modules/Navigation.module.css";
 import PropTypes from "prop-types";
-import { Context } from "./context";
+import { Context } from "./context/context";
 import Img from "./img/homesvg.svg";
 
 const Navigation = React.memo(({ categories, counts }) => {

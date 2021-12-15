@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import style from './modules/AddTodoForm.module.css'
-import { Context } from "./context";
+import { Context } from "./context/context";
 import InputWithLabel from "./InputWithLabel";
 import PropTypes from "prop-types"
 
