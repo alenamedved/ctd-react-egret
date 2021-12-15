@@ -10,7 +10,7 @@ import { Context } from "./components/context/context";
 
 const todoCategories = [
   {
-    category: "Personal",
+    category: "Presentation",
     imgSrc: "./logo/human.png",
   },
   {
@@ -22,25 +22,6 @@ const todoCategories = [
     imgSrc: "./logo/furry.jpg",
   },
 ];
-
-/* async function fetchTodoItems(category) {
-  try {
-    const response = await fetch(
-      `https://api.airtable.com/v0/${
-        process.env.REACT_APP_AIRTABLE_BASE_ID
-      }/${encodeURIComponent(category)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
-        },
-      }
-    );
-
-    return await response.json();
-  } catch (error) {
-    return console.log(error);
-  }
-} */
 
 async function fetchTable(todoCategory) {
   try {
@@ -62,18 +43,13 @@ async function fetchTable(todoCategory) {
   }
 }
 
-/* function fetchTodoTables() {
-  return todoCategories.map((todoCategory) => {
-    return fetchTodoItems(todoCategory.category);
-  });
-} */
-
 //fetch using serverless netlify function
 function fetchTodoTables() {
   return todoCategories.map((todoCategory) => {
     return fetchTable(todoCategory.category);
   });
 }
+
 function App() {
   const [todoCounts, setTodoCounts] = React.useState({});
   const [isDark, setIsDark] = React.useState(false);

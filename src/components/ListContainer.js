@@ -11,24 +11,6 @@ import { Context } from "./context/context";
 
 const todoStatusDone = true;
 
-//func to edit todo record (Title value or isCompleted value)
-function editTodoRecord(listName, id, value, status) {
-  /* fetch(`${url}/${encodeURIComponent(listName)}`, {
-    method: "PATCH",
-    headers: {
-      Authorization: authorization,
-      "Content-Type": "application/json",
-    },
-    body: body(id, value),
-  }) */
-
-  fetch(
-    `/.netlify/functions/editRecord?todoCategory=${encodeURIComponent(
-      listName
-    )}&id=${id}&value=${value}&status=${status}`
-  );
-}
-
 //object where the keys are filter values and values are functions to be passed to filter method
 const FILTER_MAP = {
   All: () => true,
@@ -49,11 +31,6 @@ const useSemiPersistentState = (listName) => {
   const [sortChecked, setSortChecked] = useState(false);
 
   useEffect(() => {
-    /* fetch(`${url}/${encodeURIComponent(listName)}`, {
-      headers: {
-        Authorization: authorization,
-      },
-    }) */
     fetch(
       `/.netlify/functions/fetchTable?todoCategory=${encodeURIComponent(
         listName
@@ -117,41 +94,21 @@ function ListContainer({ listName, handleUpdate }) {
 
   //add new todo to the list at Airtable and todoList
   const addTodo = (newTodo) => {
-    /* fetch(`${url}/${encodeURIComponent(listName)}`, {
-      method: "POST",
-      headers: {
-        Authorization: authorization,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        records: [
-          {
-            fields: {
-              Title: newTodo,
-            },
-          },
-        ], 
-      }),
-    }) */
     fetch(
       `/.netlify/functions/addItem?todoCategory=${listName}&newTodo=${newTodo}`
     )
       .then((response) => response.json())
       .then((data) => {
+        dispatchTodoList({
+          type: actions.addTodo,
+          payload: data.records[0],
+        });
         if (filter === "All" || filter === "Active") {
           if (sortChecked) {
             todoList.data.push(data.records[0]);
-
             dispatchTodoList({
               type: actions.sortList,
-              payload: todoList.data.sort((a, b) =>
-                a.fields.Title > b.fields.Title ? 1 : -1
-              ),
-            });
-          } else {
-            dispatchTodoList({
-              type: actions.addTodo,
-              payload: data.records[0],
+              payload: todoList.data,
             });
           }
         }
@@ -163,13 +120,6 @@ function ListContainer({ listName, handleUpdate }) {
 
   //remove todo from Airtable and todoList
   const removeTodo = (id, isCompleted) => {
-    /*  fetch(`${url}/${encodeURIComponent(listName)}/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: authorization,
-        "Content-Type": "application/json",
-      },
-    }) */
     fetch(`/.netlify/functions/removeItem?todoCategory=${listName}&id=${id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -189,6 +139,28 @@ function ListContainer({ listName, handleUpdate }) {
     editTodoRecord(listName, id, value);
   };
 
+  //func to edit todo record (Title value or isCompleted value)
+  function editTodoRecord(listName, id, value, status) {
+    fetch(
+      `/.netlify/functions/editRecord?todoCategory=${encodeURIComponent(
+        listName
+      )}&id=${id}&value=${value}&status=${status}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        dispatchTodoList({
+          type: actions.editRecord,
+          payload: data.records[0],
+        });
+        if (sortChecked) {
+          dispatchTodoList({
+            type: actions.sortList,
+            payload: todoList.data,
+          });
+        }
+      })
+      .catch(() => dispatchTodoList({ type: actions.fetchFail }));
+  }
   //change todo status at Airtable and todoList
   const changeTodoStatus = (id) => {
     const copyTodoList = todoList.data;
