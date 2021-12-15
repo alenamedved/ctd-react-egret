@@ -1,0 +1,9 @@
+.footer {
+    display: flex;
+    grid-column: 1 / span 3;
+    margin: auto;
+    margin-top: 30px;
+}
+.footer a {
+    padding: 5px;
+}

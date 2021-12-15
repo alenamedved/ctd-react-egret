@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ListContainer from "./components/ListContainer";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
+import Footer from "./components/Footer";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import { Context } from "./components/context";
@@ -138,6 +139,7 @@ function App() {
             </Route>
           ))}
         </Switch>
+        <Footer />
       </Context.Provider>
     </Router>
   );

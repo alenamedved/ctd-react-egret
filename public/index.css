@@ -16,13 +16,13 @@ body.isDark {
 #root {
   display: grid;
   grid-template-columns: 0.1fr 2fr 5fr;
-  grid-template-rows: 25px auto;
+  grid-template-rows: 25px auto 30px;
   justify-items: left;
   background-image: radial-gradient(ellipse at top, #d3d3d3, #808080);
   border: solid black 2px;
   height: 100vh;
   overflow: auto;
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
   box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 38%);
 }
 body.isDark #root {
