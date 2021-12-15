@@ -1,7 +1,7 @@
 import React, {memo, useContext} from 'react';
 import style from '../modules/FilterButton.module.css'
 import PropTypes from "prop-types"
-import { Context } from "../context";
+import { Context } from "../context/context";
 
 const FilterButton = memo(({ name, isPressed, setFilter }) => {
   const isDark = useContext(Context);

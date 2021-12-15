@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import style from './modules/AddTodoForm.module.css'
-import { Context } from "./context";
+import { Context } from "./context/context";
 import InputWithLabel from "./InputWithLabel";
 import PropTypes from "prop-types"
 
@@ -36,7 +36,7 @@ const AddTodoForm = React.memo(({ onAddTodo }) => {
 })
 
 AddTodoForm.propTypes = {
-  onAddTodo: PropTypes.func,
+  onAddTodo: PropTypes.func.isRequired,
 };
 
 export default AddTodoForm;

@@ -1,0 +1,19 @@
+.footer {
+    display: flex;
+    grid-column: 1 / span 3;
+    margin: auto;
+    margin-bottom: 20px;
+    padding-top: 40px;
+}
+.footer a {
+    padding: 5px;
+}
+.footer p {
+    font-size: small;
+    color: #696666;
+}
+@media screen and (max-width: 450px) {
+.footer p {
+    font-size: xx-small;
+}
+}
