@@ -57,7 +57,7 @@ const useSemiPersistentState = (listName, token) => {
         });
       })
       .catch(() => dispatchTodoList({ type: actions.fetchFail }));
-  }, [listName, filter, sortChecked]);
+  }, [listName, filter, sortChecked, token]);
 
   return [
     todoList,

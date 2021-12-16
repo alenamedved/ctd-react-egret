@@ -7,8 +7,6 @@ import Footer from "./components/Footer";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import { Context } from "./components/context/context";
-import { useEffect } from "react/cjs/react.development";
-
 
 
 const todoCategories = [
