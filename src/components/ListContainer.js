@@ -21,7 +21,7 @@ const FILTER_MAP = {
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 //custom hook
-const useSemiPersistentState = (listName) => {
+const useSemiPersistentState = (listName, token) => {
   const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
     data: [], //use an empty string as an initial state
     isLoading: true,
@@ -34,7 +34,7 @@ const useSemiPersistentState = (listName) => {
     fetch(
       `/.netlify/functions/fetchTable?todoCategory=${encodeURIComponent(
         listName
-      )}`
+      )}&token=${token}`
     )
       .then((response) => {
         return response.json();
@@ -69,7 +69,7 @@ const useSemiPersistentState = (listName) => {
   ];
 };
 
-function ListContainer({ listName, handleUpdate }) {
+function ListContainer({ listName, handleUpdate, token }) {
   const [
     todoList,
     dispatchTodoList,
@@ -77,7 +77,7 @@ function ListContainer({ listName, handleUpdate }) {
     setFilter,
     sortChecked,
     setSortChecked,
-  ] = useSemiPersistentState(listName);
+  ] = useSemiPersistentState(listName, token);
 
   const isDark = useContext(Context);
 
