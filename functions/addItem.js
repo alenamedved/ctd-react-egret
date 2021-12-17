@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
 /** The next 2 lines refer to environment variables configured in Netlify settings (found in "Site settings > Build & deploy > Environment" as of this writing) */
-const { REACT_APP_AIRTABLE_API_KEY } = process.env
-const { REACT_APP_AIRTABLE_BASE_ID } = process.env
+const { REACT_APP_AIRTABLE_API_KEY, REACT_APP_AIRTABLE_BASE_ID  } = process.env
+
 
 const authorization = `Bearer ${REACT_APP_AIRTABLE_API_KEY}`;
 

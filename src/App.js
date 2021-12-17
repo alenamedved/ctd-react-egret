@@ -8,7 +8,6 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import { Context } from "./components/context/context";
 
-
 const todoCategories = [
   {
     category: "Presentation",
@@ -54,9 +53,8 @@ function fetchTodoTables(token) {
 function App() {
   const [todoCounts, setTodoCounts] = React.useState({});
   const [isDark, setIsDark] = React.useState(false);
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState("");
 
-  
   React.useLayoutEffect(() => {
     if (isDark) {
       document.body.classList.add("isDark");
@@ -66,10 +64,10 @@ function App() {
   }, [isDark]);
 
   React.useEffect(() => {
-    let inputToken = token
-    if(!inputToken) {
-       inputToken = prompt("Enter a password")
-      setToken(inputToken)
+    let inputToken = token;
+    if (!inputToken) {
+      inputToken = prompt("Enter a password");
+      setToken(inputToken);
     }
     Promise.all(fetchTodoTables(inputToken)).then((todoResponses) => {
       const counts = {};
