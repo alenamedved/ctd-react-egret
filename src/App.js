@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ListContainer from "./components/ListContainer";
 import Navigation from "./components/Navigation";
@@ -23,12 +23,12 @@ const todoCategories = [
   },
 ];
 
-async function fetchTable(todoCategory) {
+async function fetchTable(todoCategory, token) {
   try {
     const response = await fetch(
       `/.netlify/functions/fetchTable?todoCategory=${encodeURIComponent(
         todoCategory
-      )}`,
+      )}&token=${token}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -44,15 +44,16 @@ async function fetchTable(todoCategory) {
 }
 
 //fetch using serverless netlify function
-function fetchTodoTables() {
+function fetchTodoTables(token) {
   return todoCategories.map((todoCategory) => {
-    return fetchTable(todoCategory.category);
+    return fetchTable(todoCategory.category, token);
   });
 }
 
 function App() {
   const [todoCounts, setTodoCounts] = React.useState({});
   const [isDark, setIsDark] = React.useState(false);
+  const [token, setToken] = useState("");
 
   React.useLayoutEffect(() => {
     if (isDark) {
@@ -63,7 +64,12 @@ function App() {
   }, [isDark]);
 
   React.useEffect(() => {
-    Promise.all(fetchTodoTables()).then((todoResponses) => {
+    let inputToken = token;
+    if (!inputToken) {
+      inputToken = prompt("Enter a password");
+      setToken(inputToken);
+    }
+    Promise.all(fetchTodoTables(inputToken)).then((todoResponses) => {
       const counts = {};
 
       todoCategories.forEach((todoCategory, index) => {
@@ -111,6 +117,7 @@ function App() {
               <ListContainer
                 listName={table.category}
                 handleUpdate={updateCount}
+                token={token}
               />
             </Route>
           ))}

@@ -1,8 +1,8 @@
 const fetch = require("node-fetch");
 const { useDebugValue } = require("react");
 
-const { REACT_APP_AIRTABLE_API_KEY } = process.env;
-const { REACT_APP_AIRTABLE_BASE_ID } = process.env;
+const { REACT_APP_AIRTABLE_API_KEY, REACT_APP_AIRTABLE_BASE_ID } = process.env;
+
 
 const authorization = `Bearer ${REACT_APP_AIRTABLE_API_KEY}`;
 
